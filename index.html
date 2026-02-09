@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>婚活パーティマッチングシステム</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-heart"></i> 婚活パーティマッチングシステム</h1>
+            <p class="subtitle">第一・第二希望を入力してください</p>
+        </header>
+
+        <div class="content">
+            <div class="info-section">
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>受付番号について</strong>
+                        <p>男性：1〜20番 / 女性：21〜40番</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="participantForm" class="form-card">
+                <h2><i class="fas fa-user-plus"></i> 参加者登録</h2>
+                
+                <div class="form-group">
+                    <label for="name">お名前（任意）</label>
+                    <input type="text" id="name" placeholder="山田 太郎">
+                </div>
+
+                <div class="form-group">
+                    <label for="receptionNumber">あなたの受付番号 <span class="required">*</span></label>
+                    <input type="number" id="receptionNumber" min="1" max="40" required placeholder="1〜40">
+                    <small class="hint-text">※ 男性: 1-20番 / 女性: 21-40番</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstChoice">第一希望の受付番号 <span class="required">*</span></label>
+                    <input type="number" id="firstChoice" min="1" max="40" required placeholder="相手の受付番号">
+                    <small id="firstChoiceHint" class="hint-text"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="secondChoice">第二希望の受付番号 <span class="required">*</span></label>
+                    <input type="number" id="secondChoice" min="1" max="40" required placeholder="相手の受付番号">
+                    <small id="secondChoiceHint" class="hint-text"></small>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-check"></i> 登録する
+                </button>
+            </form>
+
+            <div class="admin-link">
+                <a href="admin.html" class="btn-secondary">
+                    <i class="fas fa-shield-alt"></i> 管理者画面
+                </a>
+            </div>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            <i class="fas fa-check-circle"></i> 登録が完了しました！
+        </div>
+
+        <div id="errorMessage" class="error-message">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+        </div>
+    </div>
+
+    <script src="js/participant.js"></script>
+</body>
+</html>
