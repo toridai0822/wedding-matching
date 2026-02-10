@@ -56,19 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const firstChoice = parseInt(firstChoiceInput.value);
         const secondChoice = parseInt(secondChoiceInput.value);
         
-        // 自分自身を選択していないかチェック
         if (firstChoice === receptionNumber || secondChoice === receptionNumber) {
             showError('自分自身を希望に選択することはできません');
             return false;
         }
         
-        // 第一希望と第二希望が同じでないかチェック
         if (firstChoice === secondChoice) {
             showError('第一希望と第二希望は異なる番号を選択してください');
             return false;
         }
         
-        // 範囲チェック
         if (firstChoice < 1 || firstChoice > 40) {
             showError('第一希望は1〜40番の範囲で入力してください');
             return false;
@@ -80,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const gender = getGenderFromNumber(receptionNumber);
         
-        // 性別に応じた範囲チェック
         if (gender === 'male') {
             if (firstChoice < 21 || firstChoice > 40) {
                 showError('男性は女性（21〜40番）を選択してください');
@@ -104,11 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
     
-    // イベントリスナー
     receptionNumberInput.addEventListener('blur', validateReceptionNumber);
     receptionNumberInput.addEventListener('input', updateChoiceHints);
     
-    // フォーム送信
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -128,8 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         try {
-            // 既存の参加者チェック（Supabase）
-            const { data: existingData, error: checkError } = await supabase
+            const { data: existingData, error: checkError } = await supabaseClient
                 .from('participants')
                 .select('*')
                 .eq('reception_number', formData.reception_number);
@@ -145,8 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // 参加者登録（Supabase）
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('participants')
                 .insert([formData])
                 .select();
@@ -167,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // 成功メッセージ表示
     function showSuccess(message) {
         const successMsg = document.getElementById('successMessage');
         successMsg.classList.add('show');
@@ -176,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
-    // エラーメッセージ表示
     function showError(message) {
         const errorMsg = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
