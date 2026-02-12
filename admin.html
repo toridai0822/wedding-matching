@@ -5,149 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="./">
     <title>管理者画面 - 婚活パーティマッチングシステム</title>
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-    <!-- ログイン画面 -->
-    <div id="loginScreen" class="login-container">
-        <div class="login-card">
-            <h2><i class="fas fa-shield-alt"></i> 管理者ログイン</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="password">パスワード</label>
-                    <input type="password" id="password" placeholder="パスワードを入力" required autocomplete="current-password">
-                </div>
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> ログイン
+<!-- ログイン画面 -->
+<div id="loginScreen" class="login-container">
+    <div class="login-card">
+        <h2><i class="fas fa-shield-alt"></i> 管理者ログイン</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" placeholder="パスワードを入力" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt"></i> ログイン
+            </button>
+            <a href="index.html" class="btn-secondary" style="margin-top:15px;">
+                <i class="fas fa-arrow-left"></i> 戻る
+            </a>
+        </form>
+    </div>
+</div>
+
+<!-- 管理画面 -->
+<div id="adminScreen" class="container admin-container" style="display:none;">
+
+    <header class="header">
+        <div class="admin-header">
+            <div>
+                <h1><i class="fas fa-cog"></i> 管理者画面</h1>
+                <p class="subtitle">マッチング管理・結果確認</p>
+            </div>
+            <div class="action-buttons">
+                <button id="matchBtn" class="btn-action btn-match">
+                    <i class="fas fa-heart"></i> マッチング実行
                 </button>
-                <a href="index.html" class="btn-secondary" style="margin-top: 15px;">
-                    <i class="fas fa-arrow-left"></i> 戻る
-                </a>
-            </form>
-        </div>
-    </div>
-
-    <!-- 管理画面 -->
-    <div id="adminScreen" class="container admin-container" style="display: none;">
-        <header class="header">
-            <div class="admin-header">
-                <div>
-                    <h1><i class="fas fa-cog"></i> 管理者画面</h1>
-                    <p class="subtitle">マッチング管理・結果確認</p>
-                </div>
-                <div class="action-buttons">
-                    <button id="matchBtn" class="btn-action btn-match">
-                        <i class="fas fa-heart"></i> マッチング実行
-                    </button>
-                    <button id="resetBtn" class="btn-action btn-reset">
-                        <i class="fas fa-trash-alt"></i> 全データリセット
-                    </button>
-                    <button id="logoutBtn" class="btn-action btn-logout">
-                        <i class="fas fa-sign-out-alt"></i> ログアウト
-                    </button>
-                </div>
+                <button id="resetBtn" class="btn-action btn-reset">
+                    <i class="fas fa-trash-alt"></i> 全データリセット
+                </button>
+                <button id="logoutBtn" class="btn-action btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> ログアウト
+                </button>
             </div>
-        </header>
-
-        <div class="content">
-            <div class="stats-grid">
-                <div class="stat-card male">
-                    <i class="fas fa-mars"></i>
-                    <div class="number" id="maleCount">0</div>
-                    <div class="label">男性参加者</div>
-                </div>
-                <div class="stat-card female">
-                    <i class="fas fa-venus"></i>
-                    <div class="number" id="femaleCount">0</div>
-                    <div class="label">女性参加者</div>
-                </div>
-                <div class="stat-card matches">
-                    <i class="fas fa-heart"></i>
-                    <div class="number" id="matchCount">0</div>
-                    <div class="label">マッチング成立</div>
-                </div>
-            </div>
-
-            <!-- 参加者一覧 -->
-            <section>
-                <h2 style="margin-bottom: 20px;"><i class="fas fa-users"></i> 参加者一覧</h2>
-                <div class="table-container">
-                    <table id="participantsTable">
-                        <thead>
-                            <tr>
-                                <th>受付番号</th>
-                                <th>名前</th>
-                                <th>性別</th>
-                                <th>第一希望</th>
-                                <th>第二希望</th>
-                            </tr>
-                        </thead>
-                        <tbody id="participantsBody">
-                            <tr>
-                                <td colspan="5" class="no-data">
-                                    <i class="fas fa-inbox"></i>
-                                    <div>参加者データがありません</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- マッチング結果 -->
-            <section style="margin-top: 40px;">
-                <h2 style="margin-bottom: 20px;"><i class="fas fa-heart-circle"></i> マッチング結果</h2>
-                <div class="table-container">
-                    <table id="matchesTable">
-                        <thead>
-                            <tr>
-                                <th>受付番号</th>
-                                <th>名前</th>
-                                <th style="text-align: center;"><i class="fas fa-heart"></i></th>
-                                <th>受付番号</th>
-                                <th>名前</th>
-                                <th>マッチタイプ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="matchesBody">
-                            <tr>
-                                <td colspan="6" class="no-data">
-                                    <i class="fas fa-inbox"></i>
-                                    <div>マッチングが実行されていません</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
         </div>
+    </header>
+
+    <div class="content">
+
+        <!-- 統計 -->
+        <div class="stats-grid">
+            <div class="stat-card male">
+                <i class="fas fa-mars"></i>
+                <div class="number" id="maleCount">0</div>
+                <div class="label">男性参加者</div>
+            </div>
+            <div class="stat-card female">
+                <i class="fas fa-venus"></i>
+                <div class="number" id="femaleCount">0</div>
+                <div class="label">女性参加者</div>
+            </div>
+            <div class="stat-card matches">
+                <i class="fas fa-heart"></i>
+                <div class="number" id="matchCount">0</div>
+                <div class="label">マッチング成立</div>
+            </div>
+        </div>
+
+        <!-- 参加者一覧 -->
+        <section>
+            <h2 style="margin-bottom:20px;">
+                <i class="fas fa-users"></i> 参加者一覧
+            </h2>
+
+            <div class="table-container">
+                <table id="participantsTable">
+                    <thead>
+                        <tr>
+                            <th>受付番号</th>
+                            <th>名前</th>
+                            <th>性別</th>
+                            <th>第一希望</th>
+                            <th>第二希望</th>
+                        </tr>
+                    </thead>
+                    <tbody id="participantsBody">
+                        <tr>
+                            <td colspan="5" class="no-data">
+                                <i class="fas fa-inbox"></i>
+                                <div>参加者データがありません</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- マッチング結果 -->
+        <section style="margin-top:40px;">
+            <h2 style="margin-bottom:20px;">
+                <i class="fas fa-heart-circle"></i> マッチング結果
+            </h2>
+
+            <div class="table-container">
+                <table id="matchesTable">
+                    <thead>
+                        <tr>
+                            <th>受付番号</th>
+                            <th>名前</th>
+                            <th style="text-align:center;">
+                                <i class="fas fa-heart"></i>
+                            </th>
+                            <th>受付番号</th>
+                            <th>名前</th>
+                            <th>マッチタイプ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matchesBody">
+                        <tr>
+                            <td colspan="6" class="no-data">
+                                <i class="fas fa-inbox"></i>
+                                <div>マッチングが実行されていません</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
     </div>
+</div>
 
-    <div id="successMessage" class="success-message">
-        <i class="fas fa-check-circle"></i> <span id="successText"></span>
-    </div>
+<div id="successMessage" class="success-message">
+    <i class="fas fa-check-circle"></i>
+    <span id="successText"></span>
+</div>
 
-    <div id="errorMessage" class="error-message">
-        <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
-    </div>
+<div id="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-circle"></i>
+    <span id="errorText"></span>
+</div>
 
-    <!-- ▼▼▼ ここが今回の修正ポイント ▼▼▼ -->
+<!-- ========================= -->
+<!--   JavaScript 読み込み順  -->
+<!-- ========================= -->
 
-    <!-- Supabase CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ① Supabase本体（1回だけ） -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Supabase接続設定 -->
-    <script src="js/config.js"></script>
-
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ② 接続設定（1回だけ） -->
 <script src="js/config.js"></script>
+
+<!-- ③ 機能スクリプト -->
 <script src="js/matching.js"></script>
 <script src="js/admin.js"></script>
-
 
 </body>
 </html>
