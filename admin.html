@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <!-- ログイン画面 -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
@@ -53,7 +54,6 @@
         </header>
 
         <div class="content">
-            <!-- 統計情報 -->
             <div class="stats-grid">
                 <div class="stat-card male">
                     <i class="fas fa-mars"></i>
@@ -135,7 +135,19 @@
         <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
     </div>
 
+    <!-- ▼▼▼ ここが今回の修正ポイント ▼▼▼ -->
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Supabase接続設定 -->
+    <script src="js/config.js"></script>
+
+    <!-- マッチングロジック -->
     <script src="js/matching.js"></script>
+
+    <!-- 管理画面ロジック -->
     <script src="js/admin.js"></script>
+
 </body>
 </html>
